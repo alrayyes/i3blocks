@@ -85,6 +85,16 @@ if [[ ! -f "${CONFIG_FILE}" ]]; then
   echo "${CONFIG_FILE}"
   exit 33
 fi
+
+source "${CONFIG_FILE}"
+
+COUNT=`curl -su $MAIL_USER:$MAIL_PASSWORD https://mail.google.com/mail/feed/atom || echo "<fullcount>unknown number of</fullcount>"`
+COUNT=`echo "$COUNT" | grep -oPm1 "(?<=<fullcount>)[^<]+" `
+if [ "$COUNT" = "0" ]; then
+	echo ""
+else
+	echo $COUNT
+fi
 ```
 
 ## i3blocks config
