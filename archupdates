@@ -1,0 +1,12 @@
+#!/bin/sh
+# Arch upgradeable packages
+
+list=`pacman -Sup 2> /dev/null`
+
+if [ "$list" == ":: Starting full system upgrade..." ]; then
+    count=""
+else
+    count=`echo "$list" | wc -l`
+fi
+
+echo "$count"
