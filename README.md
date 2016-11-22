@@ -141,6 +141,48 @@ color=#00FF00
 interval=30
 ```
 
+# cmus
+
+## Description
+Prints current song playing in [cmus](https://cmus.github.io/)
+
+## Source
+```shell
+#!/bin/sh
+
+ICON_PLAY="➤"
+ICON_PAUSE="Ⅱ"
+ICON_STOP="≠"
+CUR_ICON=""
+
+INFO_ARTIST=$(cmus-remote -Q | grep ' artist ' | cut -d ' ' -f3-)
+INFO_ALBUM=$(cmus-remote -Q | grep ' album ' | cut -d ' ' -f3-)
+INFO_TITLE=$(cmus-remote -Q | grep ' title ' | cut -d ' ' -f3-)
+
+PLAYER_STATUS=$(cmus-remote -Q | grep 'status' | cut -d ' ' -f2-)
+
+if [[ "${PLAYER_STATUS}" = "paused" ]]; then
+  CUR_ICON="${ICON_PAUSE}"
+elif [[ "${PLAYER_STATUS}" = "playing" ]]; then
+  CUR_ICON="${ICON_PLAY}"
+else
+  CUR_ICON="${ICON_STOP}"
+fi
+
+if [[ "${INFO_TITLE}" != "" ]] && [[ "${INFO_ARTIST}" != "" ]]; then
+  echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
+  echo "${INFO_ARTIST} - ${INFO_TITLE} ${CUR_ICON}"
+fi
+```
+
+## i3blocks config
+```shell
+[cmus]
+label=
+command=~/i3blocks/cmus
+interval=5
+```
+
 # License
 
 This theme is released under the MIT License. For more information read the [license][license].
